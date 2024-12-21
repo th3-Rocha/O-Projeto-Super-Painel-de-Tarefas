@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #2B1887;
+  --header: #5D5FEF;
+  --foreground: #D5CCFF;
+  --task-background: #F4F2FF;
+  --task-prior-color-na: #D9D9D9;
+  --task-prior-color-low: #01dd10;
+  --task-prior-color-med: #F9D100;
+  --task-prior-color-high: #E42C5F;
+} 
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
