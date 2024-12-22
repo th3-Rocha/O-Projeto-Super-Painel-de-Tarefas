@@ -18,6 +18,10 @@ export default {
         task_prior_color_med: "var(--task-prior-color-med)",
         task_prior_color_high: "var(--task-prior-color-high)"
       },
+      fontFamily: {
+        'dm-sans': ['"DM Sans Variable"', 'sans-serif'],
+        'inter': ['"Inter Variable"', 'sans-serif'],
+      },
     },
   },
   plugins: [],
