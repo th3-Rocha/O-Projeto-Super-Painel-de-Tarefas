@@ -5,9 +5,14 @@ import { useRouter } from "next/navigation";
 
 export default function Login() {
   const router = useRouter();
-  const credential = sessionStorage.getItem("google_access_token");
+  let credential = null;
 
   useEffect(() => {
+    try {
+      credential = sessionStorage.getItem("google_access_token");
+    } catch (error) {
+      return;
+    }
     if (credential == null) {
       console.log("Access token not found.");
       router.push("/");

@@ -11,11 +11,16 @@ export default function Home() {
   const [isProfileClicked, setIsProfileClicked] = useState(false);
 
   const router = useRouter();
-  const credential = sessionStorage.getItem("google_access_token");
+  let credential: string | null = null;
   useEffect(() => {
-    if (credential == null) {
-      console.log("Access token not found.");
+    try {
+      credential = sessionStorage.getItem("google_access_token");
+    } catch (error) {
       router.push("/");
+      return;
+    }
+    if (credential == null) {
+      
     } else {
       fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
         headers: {
