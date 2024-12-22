@@ -10,7 +10,7 @@ export default function Home() {
     <div className="font-dm-sans">
       <Header />
       <div className="flex justify-center items-center w-full mt-20">
-        <GoogleOAuthProvider clientId="937655115907-4qfc1hctmqd81rtsokr6bpsiv4bdvsgf.apps.googleusercontent.com">
+        <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID || ""}>
           <Login />
         </GoogleOAuthProvider>
       </div>

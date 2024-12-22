@@ -13,6 +13,7 @@ export default {
         foreground: "var(--foreground)",
         header: "var(--header)",
         task_background: "var(--task-background)",
+        task_background_checked: "var(--task-background-checked)",
         task_prior_color_na: "var(--task-prior-color-na)",
         task_prior_color_low: "var(--task-prior-color-low)",
         task_prior_color_med: "var(--task-prior-color-med)",
