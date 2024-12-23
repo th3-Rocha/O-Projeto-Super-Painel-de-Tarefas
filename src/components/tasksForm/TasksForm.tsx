@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Task from "./Task";
 import { fetchUserTasks, removeTask } from "./tasksApi.";
+import TaskModal from "./TaskModal";
+import CreateTaskModal from "./CreateTaskModal";
+import PulseLoader from "react-spinners/PulseLoader";
+
 type Task = {
   id: string;
   name: string;
@@ -15,15 +19,30 @@ interface TaskFormProps {
 
 export default function TasksForm({ userIdSub }: TaskFormProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [taskEdit, setTaskEdit] = useState<Task>();
+  //modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalText, setIsModalText] = useState("");
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  //modal
+  //create task modal
+  const [isCreateTaskModalOpen, setCreateTaskIsModalOpen] = useState(false);
+  const openTaskModal = () => setCreateTaskIsModalOpen(true);
+  const closeTaskModal = () => {
+    refreshTasks(isPriorSort);
+    setCreateTaskIsModalOpen(false);
+  };
+  //create task modal
 
   const [loading, setLoading] = useState<boolean>(true);
   const [isPriorSort, setIsPriorSort] = useState<boolean>(true);
 
   useEffect(() => {
+    setLoading(true);
     const getTasks = async () => {
       try {
         if (userIdSub) {
-          console.log("isPriorSort:", isPriorSort);
           const userTasks = await fetchUserTasks(userIdSub, isPriorSort);
           console.log("As tasks:", userTasks);
           setTasks(userTasks);
@@ -39,17 +58,17 @@ export default function TasksForm({ userIdSub }: TaskFormProps) {
   }, [userIdSub]);
 
   const refreshPriorTasks = async () => {
-    setIsPriorSort(prevState => {
+    setIsPriorSort((prevState) => {
       const newState = !prevState;
-      refreshTasks(newState); 
+      refreshTasks(newState);
       return newState;
     });
   };
-  
+
   const refreshTasks = async (newSort: boolean) => {
     try {
       if (userIdSub) {
-        console.log("isPriorSort:", newSort);
+        setLoading(true);
         const userTasks = await fetchUserTasks(userIdSub, newSort);
         console.log("As tasks recarregadas:", userTasks);
         setTasks(userTasks);
@@ -61,10 +80,34 @@ export default function TasksForm({ userIdSub }: TaskFormProps) {
     }
   };
 
+  const removeTaskModal = async (id: string, userId: string) => {
+    try {
+      let res = removeTask(id, userId);
+      setLoading(true);
+      if (await res) {
+        setIsModalText("Tarefa Deletada com Sucesso");
+        openModal();
+        refreshTasks(isPriorSort);
+      } else {
+        setIsModalText("Erro ao Deletar a Tarefa");
+        openModal();
+      }
+    } catch (err) {
+      console.error("Erro ao Deletar a tarefa:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="mx-auto sm:w-full lg:w-5/6  rounded-xl bg-foreground p-6 shadow-xl text-background">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-semibold ml-6 ">Tarefas</h1>
+        <div className="flex items-center gap-4">
+          <h1 className="text-xl font-semibold ml-6 ">Tarefas</h1>
+
+          <PulseLoader color="var(--background)" loading={loading} size={10} />
+        </div>
+
         <button
           onClick={() => refreshPriorTasks()}
           className="px-4 py-2 bg-header text-foreground font-semibold rounded-full hover:bg-background"
@@ -72,16 +115,34 @@ export default function TasksForm({ userIdSub }: TaskFormProps) {
           {isPriorSort ? "Prioridade" : "Concluídas"}
         </button>
       </div>
-      <div className="flex flex-col gap-4 mb-4">
+      <div className="flex flex-col gap-4 mb-4 max-h-[33rem] overflow-y-scroll scrollbar scrollbar-thumb-header scrollbar-thumb-rounded-full scrollbar-thumb-shadow-md  ">
         {tasks.map((task) => (
-          <Task key={task.id} onRemove={removeTask} {...task} />
+          <Task
+            key={task.id}
+            onRefresh={() => refreshTasks(isPriorSort)}
+            onRemove={removeTaskModal}
+            {...task}
+          />
         ))}
       </div>
+
       <div>
-        <button className="px-4 py-2 bg-header text-foreground font-semibold rounded-full hover:bg-background">
-          {" "}
-          Nova Tarefa{" "}
+        <button
+          onClick={() => openTaskModal()}
+          className="px-4 py-2 bg-header text-foreground font-semibold rounded-full hover:bg-background"
+        >
+          Nova Tarefa
         </button>
+        <TaskModal
+          modalText={modalText}
+          isOpen={isModalOpen}
+          onClose={closeModal}
+        />
+        <CreateTaskModal
+          isOpen={isCreateTaskModalOpen}
+          onClose={closeTaskModal}
+          userId={userIdSub}
+        />
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ export const removeTask = async (taskId: string, userID: string) => {
   }
 };
 
-export const CreateUserSub = async (userSubId: string) => {
+export const createUserSub = async (userSubId: string) => {
   console.log("Criando usuario");
   const newUser = {
     sub: userSubId,
@@ -48,7 +48,68 @@ export const CreateUserSub = async (userSubId: string) => {
   }
 };
 
-export const VerifyUserSub = async (userSubId: string) => {
+export const createUserTask = async (userID: string, newTask: any) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_MOCK_API_SECRET}/users/${userID}/tasks`,
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(newTask),
+      }
+    );
+
+    if (response.ok) {
+      console.log(`Tarefa criada com sucesso`);
+      return true;
+    } else {
+      console.log(response);
+      throw new Error(`Erro ao criar a tarefa`);
+    }
+  } catch (error) {
+    console.error("Erro ao criar tarefa:", error);
+    return false;
+  }
+};
+
+
+
+
+
+
+export const editUserTask = async (userID:string, editTask: any) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_MOCK_API_SECRET}/users/${userID}/tasks/${editTask.id}`,
+      {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(editTask),
+      }
+    );
+
+    if (response.ok) {
+      console.log(`Tarefa editada com sucesso`);
+      return true;
+    } else {
+      console.log(response);
+      throw new Error(`Erro ao editar a tarefa`);
+    }
+  } catch (error) {
+    console.error("Erro ao editada tarefa:", error);
+    return false;
+  }
+};
+
+
+
+
+
+
+
+
+
+export const verifyUserSub = async (userSubId: string) => {
   const url = new URL(`${process.env.NEXT_PUBLIC_MOCK_API_SECRET}/users`);
   url.searchParams.append("sub", userSubId);
 
@@ -60,7 +121,7 @@ export const VerifyUserSub = async (userSubId: string) => {
     let res = await response.json();
     let user;
     if (res[0] === null || res[0] === undefined || res === "Not found") {
-      user = await CreateUserSub(userSubId);
+      user = await createUserSub(userSubId);
     } else {
       user = res[0];
     }
@@ -68,6 +129,8 @@ export const VerifyUserSub = async (userSubId: string) => {
       console.error("Erro ao Criar Usuario:");
       return null;
     }
+    sessionStorage.setItem("user_id", user.id);
+
     return user;
   } catch (error) {}
 };
@@ -77,7 +140,7 @@ export const fetchUserTasks = async (
   isPriorSort?: boolean
 ) => {
   try {
-    let user = await VerifyUserSub(userSubId);
+    let user = await verifyUserSub(userSubId);
     const userId = user.id;
     if (!userId) {
       throw new Error("Usuário não encontrado ou ID ausente");
@@ -88,10 +151,10 @@ export const fetchUserTasks = async (
     );
     if (isPriorSort) {
       url.searchParams.append("sortBy", "prior");
-      url.searchParams.append('order', 'desc');
+      url.searchParams.append("order", "desc");
     } else {
       url.searchParams.append("sortBy", "checked");
-      url.searchParams.append('order', 'desc');
+      url.searchParams.append("order", "desc");
     }
 
     const response = await fetch(url.toString(), {
@@ -113,10 +176,4 @@ export const fetchUserTasks = async (
     console.error("Erro ao buscar tarefas:", error);
     throw error;
   }
-};
-
-export const CreateUserWithSub = async (userSubId: string) => {
-  const newUser = {
-    sub: userSubId,
-  };
 };
