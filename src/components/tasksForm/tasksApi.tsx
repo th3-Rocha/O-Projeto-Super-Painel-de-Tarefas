@@ -133,7 +133,7 @@ export const verifyUserSub = async (userSubId: string) => {
 
     return user;
   } catch (error) {
-    console.error("Erro ao Verificar Usuario");
+    console.error("Erro ao Verificar Usuario:",error);
   }
 };
 

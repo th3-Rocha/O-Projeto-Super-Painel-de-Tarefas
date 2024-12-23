@@ -17,10 +17,10 @@ export default function CreateTaskModal({
   isOpen,
   onClose,
 }: NewTaskModalProps) {
-  if (!isOpen) return null;
   const [taskName, setTaskName] = useState("");
   const [taskChecked, setTaskChecked] = useState(false);
   const [taskPrior, setTaskPrior] = useState(1);
+  if (!isOpen) return null;
 
   const handleSubmit = async () => {
     const newTask: NewTask = {
@@ -28,8 +28,6 @@ export default function CreateTaskModal({
       checked: taskChecked,
       prior: taskPrior,
     };
-
-  
 
     console.log("Nova Tarefa Enviada para Criação:", newTask);
 
