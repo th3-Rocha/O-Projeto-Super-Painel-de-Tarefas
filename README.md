@@ -17,7 +17,7 @@ Para configurar o projeto, siga os passos abaixo:
         
     ```bash
     npm install
-3. **Configure o mockAPI:**
+3. **Configure o mockAPI e o Google OAuth2.0 :**
 
     Crie uma coleção de users com os seguintes campos:
         
@@ -38,6 +38,9 @@ Para configurar o projeto, siga os passos abaixo:
         userId: o id do usuário ao qual a tarefa pertence (string).
 
 
+    Em seguida, vá para o site https://console.cloud.google.com, crie um novo projeto e, em seguida, acesse a tela de permissões OAuth. Nessa tela, insira a URL da página inicial do projeto e adicione os endereços de e-mail dos usuários que terão acesso ao Google OAuth.
+        
+
 
 4. **Variáveis de Ambiente:**
 
@@ -54,10 +57,8 @@ Para configurar o projeto, siga os passos abaixo:
 
     Inicie o Front-End: No diretório do src, execute:
     
-    
         
         npm run dev
-        
         
 6. **Bonus Implementados**
 
@@ -67,6 +68,6 @@ Para configurar o projeto, siga os passos abaixo:
     
 7. **Links Relevantes**
     1. Projeto no mockAPI: https://mockapi.io/clone/67686047cbf3d7cefd37cb22
-    
+    2. live no Netlify(não funciona o Google OAuth): https://superpaineltarefas.netlify.app/
 
         
