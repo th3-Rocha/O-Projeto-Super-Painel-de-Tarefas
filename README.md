@@ -25,7 +25,7 @@ Para configurar o projeto, siga os passos abaixo:
     
         sub: campo do tipo string, identificador do Google OAuth.
     
-    Crie uma coleção de tasks com os seguintes campos:
+    Crie uma coleção de tasks com os seguintes campos, as tasks são filho dos users:
         
         name: nome da tarefa (string).
         
