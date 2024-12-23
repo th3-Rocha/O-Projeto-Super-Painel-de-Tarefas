@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
 interface TaskPriorElementEditProps {
+  oldPrior:number;
   onPriorChange: (newPriority: number) => void;
 }
 
-export default function TaskPriorElementEdit({ onPriorChange }: TaskPriorElementEditProps) {
-  const [Prior, setPrior] = useState<number>(1);
+export default function TaskPriorElementEdit({ onPriorChange,oldPrior }: TaskPriorElementEditProps) {
+  const [Prior, setPrior] = useState<number>(oldPrior);
   const priorSetFun = (num: number) => {
     setPrior(num);
     onPriorChange(num);

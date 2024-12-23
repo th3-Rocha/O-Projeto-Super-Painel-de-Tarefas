@@ -69,12 +69,12 @@ export default function EditTaskModal({
               : "bg-task_background text-background"
           }`}
         >
-          <div className="flex flex-col gap-2 min-h-24 w-full justify-between">
+          <div className="flex flex-col gap-2 min-h-24 min-w-full w-full justify-between">
             <div className="flex gap-2">
               <input
                 type="checkbox"
                 checked={taskChecked}
-                className="mt-1 w-5 h-5 appearance-none cursor-pointer rounded-full border border-background transition-colors checked:bg-header checked:border-header checked:bg-check hover:border-header/50 focus:outline-none focus:ring-2 focus:ring-header/20"
+                className="mt-1 min-w-5 min-h-5 max-h-5 appearance-none cursor-pointer rounded-full border border-background transition-colors checked:bg-header checked:border-header checked:bg-check hover:border-header/50 focus:outline-none focus:ring-2 focus:ring-header/20"
                 onChange={() => setTaskChecked(!taskChecked)}
               />
               <textarea
@@ -90,6 +90,7 @@ export default function EditTaskModal({
 
             <div className="ml-7">
               <TaskPriorElementEdit
+                oldPrior={taskPrior}
                 onPriorChange={(newPriority) => setTaskPrior(newPriority)}
               />
             </div>

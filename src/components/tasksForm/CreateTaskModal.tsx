@@ -63,7 +63,7 @@ export default function CreateTaskModal({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="mx-auto sm:w-full lg:w-5/6 bg-transparent p-6 text-background">
+      <div className="mx-auto w-full max-w-2xl bg-transparent p-6 text-background">
         <div
           className={`min-h-32 flex items-start justify-between p-4 rounded-lg shadow-md mr-1 ${
             taskChecked
@@ -71,12 +71,12 @@ export default function CreateTaskModal({
               : "bg-task_background text-background"
           }`}
         >
-          <div className="flex flex-col gap-2 min-h-24 min-w-full justify-between">
+          <div className="flex flex-col gap-2 min-h-24 min-w-full w-full  justify-between">
             <div className="flex gap-2">
               <input
                 type="checkbox"
                 checked={taskChecked}
-                className={`mt-1 w-5 h-5 appearance-none cursor-pointer rounded-full border border-background transition-colors checked:bg-header checked:border-header checked:bg-check hover:border-header/50 focus:outline-none focus:ring-2 focus:ring-header/20`}
+                className={`mt-1 min-w-5 min-h-5 max-h-5 appearance-none cursor-pointer rounded-full border border-background transition-colors checked:bg-header checked:border-header checked:bg-check hover:border-header/50 focus:outline-none focus:ring-2 focus:ring-header/20`}
                 onChange={handleCheckedChange}
               />
               <textarea
@@ -91,7 +91,9 @@ export default function CreateTaskModal({
             </div>
 
             <div className="ml-7">
-              <TaskPriorElementEdit onPriorChange={handlePriorityChange} />
+              <TaskPriorElementEdit 
+              oldPrior={1}
+              onPriorChange={handlePriorityChange} />
             </div>
           </div>
         </div>
