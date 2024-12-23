@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import TasksForm from "@/components/tasksForm/TasksForm";
 export default function Home() {
+  const [user_sub, setUser_sub] = useState("");
   const [user_name, setUser_name] = useState("");
   const [user_pic, setUser_pic] = useState("");
   const [isProfileClicked, setIsProfileClicked] = useState(false);
@@ -35,6 +36,7 @@ export default function Home() {
           console.log("UserInfo:", data);
           setUser_name(data.name);
           setUser_pic(data.picture);
+          setUser_sub(data.sub);
         })
         .catch((err) => console.error("Error Not find:", err));
     }
@@ -64,7 +66,7 @@ export default function Home() {
         onProfileClick={() => setIsProfileClicked(true)}
       />
       <div className="w-full ">
-        <TasksForm />
+        <TasksForm userIdSub={user_sub}/>
       </div>
     </div>
   );

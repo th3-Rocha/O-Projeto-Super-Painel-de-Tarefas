@@ -1,59 +1,76 @@
 import { useState } from "react";
-
+import TaskPriorElement from "./TaskPriorElement";
 interface TaskProps {
   id: string;
   name: string;
+  userId: string;
   checked?: boolean;
-  priority?: number; // 1 - 4
+  prior?: number; // 1 - 4
+  onRemove?: (id: string, userId: string) => void;
+  onEdit?: (id: string, userId: string) => void;
 }
 
 export default function Task({
   id,
   name,
+  userId,
   checked = false,
-  priority = 1,
+  prior = 1,
+  onRemove,
+  onEdit,
 }: TaskProps) {
-  const priorityColors = [
-    "bg-green-100 text-green-700", // Priority 1
-    "bg-blue-100 text-blue-700", // Priority 2
-    "bg-yellow-100 text-yellow-700", // Priority 3
-    "bg-red-100 text-red-700", // Priority 4
-  ];
-
+  if (prior > 4) {
+    prior = 4;
+  }
+  if (prior < 1) {
+    prior = 1;
+  }
   return (
     <div
-      className={`flex items-start justify-between p-4 rounded-lg shadow-md ${
-        checked ? "bg-task_background_checked" : "bg-task_background text-background"
+      className={`min-h-32 flex items-start justify-between p-4 rounded-lg shadow-md ${
+        checked
+          ? "bg-task_background_checked"
+          : "bg-task_background text-background"
       }`}
     >
-      <div className="flex flex-col">
-        <div className="flex items-center gap-2">
+
+
+      <div className="flex flex-col gap-2 w-full">
+
+
+        <div className="flex gap-2 ">
           <input
             type="checkbox"
             checked={checked}
-            className={`w-5 h-5 appearance-none rounded-full border border-background cursor-pointer transition-colors checked:bg-header checked:border-header checked:bg-check hover:border-header/50 focus:outline-none focus:ring-2 focus:ring-header/20`}
+            className={`mt-1 min-w-5 h-5 appearance-none rounded-full border border-background cursor-pointer transition-colors checked:bg-header checked:border-header checked:bg-check hover:border-header/50 focus:outline-none focus:ring-2 focus:ring-header/20`}
             onChange={() => {}}
           />
-          
+          <span
+            className={` text-lg font-bold ${
+              checked ? "line-through" : ""
+            } overflow-hidden inline-block`}
+          >
+            {name}
+          </span>
+        </div>
 
-          <span className={`text-lg font-bold ${
-            checked ? "line-through" : ""
-          }`}>{name}</span> 
+
+        <div className="ml-7 ">
+          <TaskPriorElement priority={prior}></TaskPriorElement>
         </div>
-        <div
-          className={`mt-1 px-2 py-1 w-fit text-sm font-semibold rounded ${
-            priorityColors[priority - 1]
-          }`}
-        >
-          {`Prioridade ${priority}`}
-        </div>
+
+
+
       </div>
+
+
+
       <div className="flex items-center gap-2">
         <button
           className={`flex items-center justify-center w-8 h-8 text-xl font-bold text-red-500 bg-red-100 rounded-full hover:bg-red-200 ${
             checked ? "hidden" : ""
           }`}
-          onClick={() => console.log(`Removendo tarefa ${id}`)}
+          onClick={() => onRemove?.(id, userId)}
         >
           −
         </button>
