@@ -54,7 +54,7 @@ export default function TasksForm({ userIdSub }: TaskFormProps) {
     };
 
     getTasks();
-  }, [userIdSub]);
+  }, [userIdSub,isPriorSort]);
 
   const refreshPriorTasks = async () => {
     setIsPriorSort((prevState) => {
