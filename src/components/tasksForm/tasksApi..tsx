@@ -78,9 +78,6 @@ export const createUserTask = async (userID: string, newTask: NewTask) => {
   }
 };
 
-
-
-
 type Task = {
   id: string;
   name: string;
@@ -88,7 +85,7 @@ type Task = {
   prior: number;
 };
 
-export const editUserTask = async (userID:string, editTask: Task) => {
+export const editUserTask = async (userID: string, editTask: Task) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_MOCK_API_SECRET}/users/${userID}/tasks/${editTask.id}`,
@@ -112,14 +109,6 @@ export const editUserTask = async (userID:string, editTask: Task) => {
   }
 };
 
-
-
-
-
-
-
-
-
 export const verifyUserSub = async (userSubId: string) => {
   const url = new URL(`${process.env.NEXT_PUBLIC_MOCK_API_SECRET}/users`);
   url.searchParams.append("sub", userSubId);
@@ -129,7 +118,7 @@ export const verifyUserSub = async (userSubId: string) => {
       method: "GET",
       headers: { "content-type": "application/json" },
     });
-    let res = await response.json();
+    const res = await response.json();
     let user;
     if (res[0] === null || res[0] === undefined || res === "Not found") {
       user = await createUserSub(userSubId);
@@ -137,13 +126,15 @@ export const verifyUserSub = async (userSubId: string) => {
       user = res[0];
     }
     if (user === null || user === undefined) {
-      console.error("Erro ao Criar Usuario:");
+      console.error("Erro ao Criar Usuario");
       return null;
     }
     sessionStorage.setItem("user_id", user.id);
 
     return user;
-  } catch (error) {}
+  } catch (error) {
+    console.error("Erro ao Verificar Usuario");
+  }
 };
 
 export const fetchUserTasks = async (
@@ -151,7 +142,7 @@ export const fetchUserTasks = async (
   isPriorSort?: boolean
 ) => {
   try {
-    let user = await verifyUserSub(userSubId);
+    const user = await verifyUserSub(userSubId);
     const userId = user.id;
     if (!userId) {
       throw new Error("Usuário não encontrado ou ID ausente");

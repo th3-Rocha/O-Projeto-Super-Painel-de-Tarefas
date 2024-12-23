@@ -17,8 +17,6 @@ export default function CreateTaskModal({
   isOpen,
   onClose,
 }: NewTaskModalProps) {
-  if (!isOpen) return null;
-
   const [taskName, setTaskName] = useState("");
   const [taskChecked, setTaskChecked] = useState(false);
   const [taskPrior, setTaskPrior] = useState(1);
@@ -29,6 +27,8 @@ export default function CreateTaskModal({
       checked: taskChecked,
       prior: taskPrior,
     };
+    
+    if (!isOpen) return null;
 
     console.log("Nova Tarefa Enviada para Criação:", newTask);
 
@@ -43,7 +43,7 @@ export default function CreateTaskModal({
     } catch (err) {
       console.error("Erro ao Criar a Tarefa:", err);
     } finally {
-      onClose(); // Fecha o modal após a criação
+      onClose();
     }
   };
 
@@ -89,9 +89,10 @@ export default function CreateTaskModal({
             </div>
 
             <div className="ml-7">
-              <TaskPriorElementEdit 
-              oldPrior={1}
-              onPriorChange={handlePriorityChange} />
+              <TaskPriorElementEdit
+                oldPrior={1}
+                onPriorChange={handlePriorityChange}
+              />
             </div>
           </div>
         </div>
