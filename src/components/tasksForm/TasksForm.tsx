@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Task from "./Task";
-import { fetchUserTasks, removeTask } from "./tasksApi.";
+import { fetchUserTasks, removeTask } from "./tasksApi";
 import TaskModal from "./TaskModal";
 import CreateTaskModal from "./CreateTaskModal";
 import PulseLoader from "react-spinners/PulseLoader";

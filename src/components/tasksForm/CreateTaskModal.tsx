@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TaskPriorElementEdit from "./TaskPriorElementEdit";
-import { createUserTask } from "./tasksApi.";
+import { createUserTask } from "./tasksApi";
 
 type NewTask = {
   name: string;
