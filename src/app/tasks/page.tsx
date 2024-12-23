@@ -14,8 +14,8 @@ export default function Home() {
   useEffect(() => {
     try {
       credential = sessionStorage.getItem("google_access_token");
-      //console.log("Credential:", credential);
     } catch (error) {
+      console.error("Error retrieving google_access_token:", error);
       router.push("/");
       return;
     }
@@ -66,7 +66,7 @@ export default function Home() {
         onProfileClick={() => setIsProfileClicked(true)}
       />
       <div className="w-full ">
-        <TasksForm userIdSub={user_sub}/>
+        <TasksForm userIdSub={user_sub} />
       </div>
     </div>
   );

@@ -48,7 +48,13 @@ export const createUserSub = async (userSubId: string) => {
   }
 };
 
-export const createUserTask = async (userID: string, newTask: any) => {
+type NewTask = {
+  name: string;
+  checked: boolean;
+  prior: number;
+};
+
+export const createUserTask = async (userID: string, newTask: NewTask) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_MOCK_API_SECRET}/users/${userID}/tasks`,
@@ -75,9 +81,14 @@ export const createUserTask = async (userID: string, newTask: any) => {
 
 
 
+type Task = {
+  id: string;
+  name: string;
+  checked: boolean;
+  prior: number;
+};
 
-
-export const editUserTask = async (userID:string, editTask: any) => {
+export const editUserTask = async (userID:string, editTask: Task) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_MOCK_API_SECRET}/users/${userID}/tasks/${editTask.id}`,

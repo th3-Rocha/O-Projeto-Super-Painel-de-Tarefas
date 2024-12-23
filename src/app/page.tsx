@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Header from "@/components/header/Header";
 import Login from "@/components/login/Login";
 import { GoogleOAuthProvider } from "@react-oauth/google";

@@ -19,7 +19,6 @@ interface TaskFormProps {
 
 export default function TasksForm({ userIdSub }: TaskFormProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [taskEdit, setTaskEdit] = useState<Task>();
   //modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalText, setIsModalText] = useState("");
@@ -82,7 +81,7 @@ export default function TasksForm({ userIdSub }: TaskFormProps) {
 
   const removeTaskModal = async (id: string, userId: string) => {
     try {
-      let res = removeTask(id, userId);
+      const res = removeTask(id, userId);
       setLoading(true);
       if (await res) {
         setIsModalText("Tarefa Deletada com Sucesso");
@@ -141,7 +140,6 @@ export default function TasksForm({ userIdSub }: TaskFormProps) {
         <CreateTaskModal
           isOpen={isCreateTaskModalOpen}
           onClose={closeTaskModal}
-          userId={userIdSub}
         />
       </div>
     </div>

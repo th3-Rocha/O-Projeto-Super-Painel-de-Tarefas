@@ -9,13 +9,11 @@ type NewTask = {
 };
 
 interface NewTaskModalProps {
-  userId: string;
   isOpen: boolean;
   onClose: () => void;
 }
 
 export default function CreateTaskModal({
-  userId,
   isOpen,
   onClose,
 }: NewTaskModalProps) {

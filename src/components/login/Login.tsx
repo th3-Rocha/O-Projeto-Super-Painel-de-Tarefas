@@ -11,6 +11,7 @@ export default function Login() {
     try {
       credential = sessionStorage.getItem("google_access_token");
     } catch (error) {
+      console.error("Error retrieving google_access_token:", error);
       return;
     }
     if (credential == null) {

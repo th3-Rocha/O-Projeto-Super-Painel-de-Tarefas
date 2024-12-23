@@ -7,7 +7,7 @@ interface TaskProps {
   name: string;
   userId: string;
   checked?: boolean;
-  prior?: number;
+  prior: number;
   onRemove?: (id: string, userId: string) => void;
   onToggle?: (id: string, checked: boolean) => void;
   onRefresh?: () => void;
@@ -25,7 +25,7 @@ export default function Task({
   name,
   userId,
   checked = false,
-  prior = 1,
+  prior,
   onRemove,
   onToggle,
   onRefresh,
