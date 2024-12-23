@@ -51,7 +51,9 @@ export default function EditTaskModal({
       }
 
       await editUserTask(userId, updatedTask);
-      onEdit && onEdit();
+      if (onEdit) {
+        onEdit();
+      }
     } catch (err) {
       console.error("Error editing task:", err);
     } finally {
