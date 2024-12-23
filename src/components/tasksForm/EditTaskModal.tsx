@@ -62,8 +62,14 @@ export default function EditTaskModal({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="mx-auto w-full max-w-2xl bg-transparent p-6 text-background">
+    <div
+      onClick={onClose}
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="mx-auto w-full max-w-2xl bg-transparent p-6 text-background"
+      >
         <div
           className={`min-h-32 flex items-start justify-between p-4 rounded-lg shadow-md ${
             taskChecked
